@@ -1,0 +1,39 @@
+extends partials/layout.pug
+
+block title
+    title Sign in
+
+block body
+    form.fl.w-50-ns(method="post" action="/signin")
+        h1.f1.mt0 Sign in
+
+        if signinFailed
+            .bg-washed-red.near-black.mv3.pa2 Failed to sign you in
+
+        if signinDataInvalid
+            .bg-washed-red.near-black.mv3.pa2 Please use an alphanumeric user name and a password with at least 8 characters
+
+        label.db(for="name") User name
+        input.bg-white.dark-gray.ba.b--silver.w5.mw-100.pv1.ph2(type="text" name="name" required)
+
+        label.db.mt3(for="password") Password
+        input.bg-white.dark-gray.ba.b--silver.w5.mw-100.pv1.ph2(type="password" name="password" required)
+
+        button.db.mt3.bg-mid-gray.washed-yellow.pointer.bn.pv2.ph3(type="submit") Sign in
+
+    form.fl.w-50-ns.bl-ns.b--gray.pl4-ns(method="post" action="/signup")
+        h1.f1.mt0 Sign up
+
+        if userExists
+            .bg-washed-red.near-black.mv3.pa2 That account name is already taken
+
+        if signupDataInvalid
+            .bg-washed-red.near-black.mv3.pa2 Please use an alphanumeric user name and a password with at least 8 characters
+
+        label.db(for="name") User name
+        input.bg-white.dark-gray.ba.b--silver.w5.mw-100.pv1.ph2(type="text" name="name" required)
+
+        label.db.mt3(for="password") Password
+        input.bg-white.dark-gray.ba.b--silver.w5.mw-100.pv1.ph2(type="password" name="password" required)
+
+        button.db.mt3.bg-mid-gray.washed-yellow.pointer.bn.pv2.ph3(type="submit") Sign up

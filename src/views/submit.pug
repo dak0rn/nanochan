@@ -1,0 +1,16 @@
+extends partials/layout.pug
+
+block title
+    title Submit
+
+block body
+    h1.f1.mt0 Submit
+    form(method="post" action="/submit").w-40-ns
+
+        label.db(for="title") Title
+        input.bg-white.dark-gray.ba.b--silver.w-100.mw-100.pv1.ph2#title(type="text" name="title" required maxlength="255")
+
+        label.db.mt3(for="text") Content
+        textarea.bg-white.dark-gray.ba.b--silver.w-100.h4.mw-100.pv1.ph2#text(name="text" required)
+
+        button.db.mt3.bg-mid-gray.washed-yellow.pointer.bn.pv2.ph3(type="submit") Submit

@@ -1,0 +1,63 @@
+{
+    "name": "nanochan",
+    "version": "1.0.0",
+    "description": "An example image board (without images)",
+    "main": "index.js",
+    "repository": "",
+    "author": "",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "bcrypt-nodejs": "^0.0.3",
+        "better-npm-run": "~0.1.0",
+        "body-parser": "~1.17.2",
+        "compression": "^1.7.1",
+        "cookie-parser": "^1.4.3",
+        "crypto-random-string": "^1.0.0",
+        "date-fns": "~1.28.5",
+        "eslint": "~4.6.1",
+        "express": "~4.15.4",
+        "express-catch": "~1.0.0",
+        "express-error-response": "^1.0.1",
+        "express-minify": "^1.0.0",
+        "fs-extra": "~4.0.1",
+        "glob-promise": "~3.1.0",
+        "ioredis": "~3.1.4",
+        "lodash": "~4.17.4",
+        "lodash.compose": "^2.4.1",
+        "nodemon": "~1.12.0",
+        "object-path": "^0.11.4",
+        "pg-promise": "~6.5.1",
+        "prettier": "~1.9.2",
+        "pug": "^2.0.0-rc.4",
+        "request": "^2.83.0",
+        "request-promise": "^4.2.2",
+        "striptags": "^3.1.1",
+        "winston": "~2.3.1"
+    },
+    "scripts": {
+        "dev": "better-npm-run dev",
+        "start": "better-npm-run start",
+        "lint": "yarn lint:prettier && yarn lint:eslint",
+        "prettier": "prettier --config .prettierrc --write src/**/*.js",
+        "pg:migrate": "node database/postgres/db.js migrate",
+        "pg:seed": "node database/postgres/db.js seed",
+        "pg:migrateAndSeed": "node database/postgres/db.js full",
+        "lint:prettier": "prettier -l --config .prettierrc 'src/**/*.js'",
+        "lint:eslint": "eslint 'src/**/*.js'",
+        "password": "printf 'Password: ' && read pass && node -e \"require('./evilGlobalVariables');console.log(require('./src/services/security').hash('$pass').hash);\""
+    },
+    "betterScripts": {
+        "dev": {
+            "command": "nodemon --ignore 'public/*' -e js,sql,json index",
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        "start": {
+            "command": "node index",
+            "env": {
+                "NODE_ENV": "production"
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+extends partials/layout.pug
+
+block title
+    title Index
+
+block body
+    h1 Index
+
+    each thread, index in threads
+        .mb3.dt.w-100
+            .dtc.v-mid.pr4.gray #{index + 1}.
+            .dtc.v-mid.w-100
+                a.blue.no-underline(href=`/thread/${thread.id_thread}`) #{thread.title}
+            .dtc.v-mid.pr2.f6 #{thread.name}
+            .dtc.v-mid.gray.f6.nowrap= datefns.format(thread.created_at, 'YYYY-MM-DD HH:mm')

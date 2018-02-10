@@ -1,0 +1,31 @@
+extends partials/layout.pug
+
+block title
+    title Thread
+
+block body
+    h1 #{thread.title}
+    each paragraph in thread.text.split('\n')
+        p #{paragraph}
+    p.gray.f6
+     | By #{thread.name} at
+     |
+     = datefns.format(thread.created_at, 'YYYY-MM-DD HH:mm')
+
+    if session
+        form(method="post" action=`/thread/${thread.id_thread}`).w-40-ns
+
+            label.db.mt3(for="text") Comment
+            textarea.bg-white.dark-gray.ba.b--silver.w-100.h3.mw-100.pv1.ph2#text(name="text" required)
+
+            button.db.mt3.bg-mid-gray.washed-yellow.pointer.bn.pv2.ph3(type="submit") Submit
+
+    .mt4.w-60-ns
+        each comment in thread.comments
+            .ba.b--light-silver.pv0.ph2.mb3
+                .f6.silver.mt2.tr
+                    | #{thread.name} at
+                    |
+                    = datefns.format(comment.created_at, 'YYYY-MM-DD HH:mm')
+                each paragraph in comment.content.split('\n')
+                    p.ph0.pv1 #{paragraph}

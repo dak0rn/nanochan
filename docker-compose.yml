@@ -1,0 +1,43 @@
+version: '3'
+services:
+    postgres:
+        build:
+            context: ./postgres
+            args:
+                DBUSER: nano
+                DBPASS: chan
+                DBNAME: nanochan
+        networks:
+            - appnet
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./postgres/data:/var/lib/postgresql
+            - ./database/postgres/data:/data
+        hostname: postgres
+
+    # Redis database
+    redis:
+        image: 'redis:alpine'
+        networks:
+            - appnet
+        hostname: redis
+
+
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        networks:
+            - appnet
+        ports:
+            - "3000:3000"
+        volumes:
+            - .:/app
+        hostname: api
+        depends_on:
+            - postgres
+            - redis
+
+networks:
+    appnet:

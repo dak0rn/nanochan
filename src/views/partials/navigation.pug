@@ -1,0 +1,17 @@
+-
+    const items = [
+        { url: '/', text: 'Index' },
+        { url: '/submit', text: 'Submit', session: true }
+    ];
+
+nav.flex.mw8.center.h3
+    each item in items
+        if (item.session && session) || ! item.session
+            .flex.flex-column.justify-center.mr3
+                a.blue.no-underline(href=item.url) #{item.text}
+    .flex-auto
+    .flex.flex-column.justify-center
+        if session
+            a.blue.no-underline(href="/signout") Sign out
+        else
+            a.blue.no-underline(href="/signin") Sign in
