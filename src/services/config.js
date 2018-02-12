@@ -11,7 +11,7 @@ module.exports = {
     redis: env.REDIS_URL || ' redis://redis:6379',
     redisPrefix: 'app:',
 
-    postgres: env.POSTGRES_URL || 'postgres://nano:chan@postgres:5432/nanochan',
+    postgres: env.DATABASE_URL || 'postgres://nano:chan@postgres:5432/nanochan',
     pgPromiseOptions: {
         query(event) {
             if (!__DEV__) return;
