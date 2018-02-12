@@ -31,7 +31,7 @@ exports.create = async function(user, title, text, db) {
  * @return {array} List of posts
  */
 exports.list = async function(db) {
-    return await db.many(queries.list);
+    return await db.manyOrNone(queries.list);
 };
 
 /**
