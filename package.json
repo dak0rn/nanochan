@@ -22,7 +22,7 @@
         "fs-extra": "~4.0.1",
         "glob-promise": "~3.1.0",
         "ioredis": "~3.1.4",
-        "lodash": "~4.17.4",
+        "lodash": "~4.17.19",
         "lodash.compose": "^2.4.1",
         "nodemon": "^1.19.1",
         "object-path": "^0.11.4",
