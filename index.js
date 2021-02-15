@@ -30,7 +30,7 @@ process.on('unhandledRejection', reason => {
 });
 
 /* Setup the application server */
-server.use(bodyParser.urlencoded());
+server.use(bodyParser.urlencoded({ extended: true }));
 server.use(cookieParser(config.security.cookieToken));
 
 // Compress assets

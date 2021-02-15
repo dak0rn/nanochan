@@ -5,7 +5,7 @@ const glob = require('glob');
 const path = require('path');
 const fs = require('fs');
 
-const migrate = async function(trx, views = true) {
+const migrate = async function (trx, views = true) {
     console.log('Starting migration');
 
     let con;
@@ -15,12 +15,13 @@ const migrate = async function(trx, views = true) {
 
     const migrationPaths = glob
         .sync(path.resolve(__dirname, 'migrations', '*.sql'))
-        .filter(file => !!path.basename(file).match(/^\d{3}_.*\.sql$/))
+        .filter((file) => !!path.basename(file).match(/^\d{3}_.*\.sql$/))
         .sort();
 
-    const migrationFiles = migrationPaths.map(p => fs.readFileSync(p, { encoding: 'utf-8' }));
+    const migrationFiles = migrationPaths.map((p) => fs.readFileSync(p, { encoding: 'utf-8' }));
 
-    const exec = trans => {
+    const exec = (trans) => {
+        console.log('in exec');
         return migrationFiles
             .reduce((prev, curr, idx) => {
                 return prev.then(() => {
@@ -34,10 +35,10 @@ const migrate = async function(trx, views = true) {
 
                 const viewPaths = glob
                     .sync(path.resolve(__dirname, 'views', '*.sql'))
-                    .filter(file => !!path.basename(file).match(/^\d{3}_.*\.sql$/))
+                    .filter((file) => !!path.basename(file).match(/^\d{3}_.*\.sql$/))
                     .sort();
 
-                const viewFiles = viewPaths.map(p => fs.readFileSync(p, { encoding: 'utf-8' }));
+                const viewFiles = viewPaths.map((p) => fs.readFileSync(p, { encoding: 'utf-8' }));
 
                 return viewFiles.reduce((prev, curr, idx) => {
                     return prev.then(() => {
@@ -50,11 +51,11 @@ const migrate = async function(trx, views = true) {
     };
 
     try {
-        if (!trx)
-            await con.tx(t => {
+        if (!trx) {
+            await con.tx((t) => {
                 return exec(t);
             });
-        else {
+        } else {
             await exec(trx);
         }
     } catch (e) {
@@ -67,7 +68,7 @@ const migrate = async function(trx, views = true) {
     console.log('Finished migration successfully');
 };
 
-const seed = async function(trx) {
+const seed = async function (trx) {
     console.log('Starting seeding');
 
     let con;
@@ -78,20 +79,20 @@ const seed = async function(trx) {
     // Ensure we have all migrations in the right order
     const migrationPaths = glob
         .sync(path.resolve(__dirname, 'migrations', '*.sql'))
-        .filter(file => !!path.basename(file).match(/^\d{3}_.*\.sql$/))
+        .filter((file) => !!path.basename(file).match(/^\d{3}_.*\.sql$/))
         .sort()
-        .map(file => path.basename(file).replace(/^\d{3}_(.*)\.sql$/, '$1'));
+        .map((file) => path.basename(file).replace(/^\d{3}_(.*)\.sql$/, '$1'));
 
     // Get seeding files that we have migrations for
     const seedingFiles = glob
         .sync(path.resolve(__dirname, 'data', '*.csv'))
-        .map(p => path.basename(p).replace('.csv', ''));
+        .map((p) => path.basename(p).replace('.csv', ''));
 
     // Get files to seed from the point of migrations, as they're sorted
     // This will also ensure that we don't try to seed any table that does not exist
-    const filesToSeed = migrationPaths.filter(f => seedingFiles.indexOf(f) >= 0);
+    const filesToSeed = migrationPaths.filter((f) => seedingFiles.indexOf(f) >= 0);
 
-    const exec = trans => {
+    const exec = (trans) => {
         let d = Date.now();
         return filesToSeed.reduce((prev, curr) => {
             return prev.then(() => {
@@ -110,7 +111,7 @@ const seed = async function(trx) {
 
     try {
         if (!trx)
-            await con.tx(t => {
+            await con.tx((t) => {
                 return exec(t);
             });
         else await exec(trx);
@@ -124,11 +125,11 @@ const seed = async function(trx) {
     console.log('Finished seeding successfully');
 };
 
-const full = async function() {
+const full = async function () {
     const con = pg(config.postgres);
 
     try {
-        await con.tx(trx => {
+        await con.tx((trx) => {
             return migrate(trx, true).then(() => seed(trx));
         });
     } catch (e) {
@@ -138,7 +139,7 @@ const full = async function() {
     }
 };
 
-const help = function() {
+const help = function () {
     console.log(`
 The only valid parameters for this script are:
 migrate - calls all migration files
@@ -150,7 +151,7 @@ full - migrates and seeds afterwards, within the same transaction
 const mapping = {
     migrate,
     seed,
-    full
+    full,
 };
 
 const param = process.argv[2];

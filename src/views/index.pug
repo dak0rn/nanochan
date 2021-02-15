@@ -12,4 +12,4 @@ block body
             .dtc.v-mid.w-100
                 a.blue.no-underline(href=`/thread/${thread.id_thread}`) #{thread.title}
             .dtc.v-mid.pr2.f6 #{thread.name}
-            .dtc.v-mid.gray.f6.nowrap= datefns.format(thread.created_at, 'YYYY-MM-DD HH:mm')
+            .dtc.v-mid.gray.f6.nowrap= datefns.format(thread.created_at, 'yyyy-MM-dd HH:mm')

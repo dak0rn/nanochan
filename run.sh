@@ -2,7 +2,7 @@
 
 if [ ! -d "node_modules" ]
 then
-    yarn install
+    npm install
 fi
 
-exec yarn dev
+exec npm run dev

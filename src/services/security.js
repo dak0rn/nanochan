@@ -2,7 +2,6 @@
  * The security service
  */
 const bcrypt = require('bcrypt-nodejs');
-const random = require('crypto-random-string');
 const config = require('./config');
 
 /**
@@ -12,10 +11,10 @@ const config = require('./config');
  * @param {string=} salt Salt for the hashing. Generated if omitted.
  * @return {object} Hash object with properties `hash` and `salt`
  */
-exports.hash = function(plaintext, salt = bcrypt.genSaltSync()) {
+exports.hash = function (plaintext, salt = bcrypt.genSaltSync()) {
     return {
         salt,
-        hash: bcrypt.hashSync(plaintext, salt)
+        hash: bcrypt.hashSync(plaintext, salt),
     };
 };
 
@@ -26,7 +25,7 @@ exports.hash = function(plaintext, salt = bcrypt.genSaltSync()) {
  * @param {string} hash Password hash
  * @return {bool}
  */
-exports.equals = function(plaintext, hash) {
+exports.equals = function (plaintext, hash) {
     return bcrypt.compareSync(plaintext, hash);
 };
 
@@ -34,7 +33,7 @@ exports.equals = function(plaintext, hash) {
  * Middleware that ensures that only users can access the
  * corresponding route. Redirects to / if no user is present.
  */
-exports.requireUser = function(req, res, next) {
+exports.requireUser = function (req, res, next) {
     const user = req.session;
 
     if (!user || !user.id_user) return res.redirect('/');
@@ -46,7 +45,7 @@ exports.requireUser = function(req, res, next) {
  * Middleware that ensures that requests with a session are
  * redirected to /.
  */
-exports.redirectUsers = function(req, res, next) {
+exports.redirectUsers = function (req, res, next) {
     if (req.session) res.redirect('/');
     else next();
 };
@@ -56,6 +55,6 @@ exports.redirectUsers = function(req, res, next) {
  *
  * @return {string} Session token
  */
-exports.sessionToken = function() {
-    return random(config.security.tokenLength);
+exports.sessionToken = function () {
+    return Math.random().toString(32);
 };
