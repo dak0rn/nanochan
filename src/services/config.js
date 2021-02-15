@@ -14,6 +14,7 @@ module.exports = {
     postgres: {
         connectionString: env.DATABASE_URL || 'postgres://nano:chan@postgres:5432/nanochan',
         ssl: !__DEV__,
+        rejectUnauthorized: false,
     },
     pgPromiseOptions: {
         query(event) {
