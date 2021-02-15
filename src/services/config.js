@@ -11,14 +11,17 @@ module.exports = {
     redis: env.REDIS_URL || ' redis://redis:6379',
     redisPrefix: 'app:',
 
-    postgres: env.DATABASE_URL || 'postgres://nano:chan@postgres:5432/nanochan',
+    postgres: {
+        connectionString: env.DATABASE_URL || 'postgres://nano:chan@postgres:5432/nanochan',
+        ssl: !__DEV__,
+    },
     pgPromiseOptions: {
         query(event) {
             if (!__DEV__) return;
 
             const qry = event.query.replace(/\n/g, '\n| ');
             require('./log').debug('Query executed:\n|', '\n| ' + qry + '\n|');
-        }
+        },
     },
     csvPath: '/data',
 
@@ -37,17 +40,17 @@ module.exports = {
         userCookieOptions: {
             httpOnly: true,
             secure: !__DEV__,
-            path: '/'
+            path: '/',
         },
 
         tokenLength: 32,
 
         // Prefixes for the mapping <userid>: <sessionid> in redis
         idPrefix: {
-            user: 'user:'
+            user: 'user:',
         },
 
         // Prefix for the mapping <sessionid>: <user> in redis
-        userSessionPrefix: 'usession:'
-    }
+        userSessionPrefix: 'usession:',
+    },
 };
