@@ -28,7 +28,7 @@
         "object-path": "^0.11.5",
         "pg-promise": "^10.9.2",
         "prettier": "^2.2.1",
-        "pug": "^3.0.0",
+        "pug": "^3.0.1",
         "request": "^2.88.2",
         "request-promise": "^4.2.6",
         "striptags": "^3.1.1",
